@@ -9,3 +9,8 @@ const http = new XMLHttpRequest()
 
 http.open('GET', 'https://restcountries.com/v3/name/brazil')
 http.send()
+console.log(http.responseText)
+
+http.addEventListener('load', () => {
+    console.log(this.responseText)
+})
