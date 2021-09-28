@@ -66,8 +66,18 @@ const renderCountry = function(data, className = '') {
     </article>`
 
     countriesContainer.insertAdjacentHTML('beforeend', html)
-    countriesContainer.style.opacity = '1'
 } 
+
+const request = fetch('https://restcountries.com/v3/name/brasil') // Promise.
+
+const renderError = msg => {
+    countriesContainer.insertAdjacentText('beforeend', msg)
+}
+
+const objValues = function(promData) {
+    lang = Object.values(promData.languages)[0] // This method get the frist value of the object does'nt matter if is a string or an object will return the frist value.
+    signal = Object.values(promData.currencies)[0]
+}
 
 // const getCountriesDataAndNeighbour = (countrie) => {
     
@@ -123,19 +133,38 @@ const renderCountry = function(data, className = '') {
 
 // Instead of nesting callbacks, we can CHAIN PROMISES for a sequence of asynchronous operations: escaping callback hell.
 
-const request = fetch('https://restcountries.com/v3/name/brasil')
-console.log(request)
+
 
 const getCountryData = function(country) {
-    fetch(`https://restcountries.com/v3/name/${country}`).then((res) => {
-        console.log(res)
-        return res.json() // This json() method is used to read the data from the request by fetch api.
-    }).then(data => {
+    fetch(`https://restcountries.com/v3/name/${country}`)
+    .then(
+    res => res.json())//, // This json() method is used to read the data from the request by fetch api.
+    // err => alert(err)) // To deal with errors we can get them as a second paramether of the then method.
+    .then(data => {
         const [promData] = data
-        lang = Object.values(promData.languages)[0] // This method get the frist value of the object does'nt matter if is a string or an object will return the frist value.
-        signal = Object.values(promData.currencies)[0]
+        objValues(promData)
         renderCountry(promData)
+        console.log(promData)
+        const neighbour = promData.borders[0]
+        if(!neighbour) return;
+
+        return fetch(`https://restcountries.com/v3/alpha/${neighbour}`) // THE RETURN VALUE FROM THE THEN METHOD AWAYS WILL BE THE PARAM OF THE NEXT THEN()
+        .then(res => res.json())
+        .then(data => {
+            const [promData] = data
+            objValues(promData)
+            renderCountry(promData, 'neighbour')
+        })
     }) // The then method is avaliable in all promises.
+    .catch(err => {
+        console.error(`${err} meu erro personalizado`)
+        renderError(`Something went wrong!!! ${err}`)
+    }) // We use catch in the end of the promise chain to deal with all errors.
+    .finally(() => {
+        countriesContainer.style.opacity = 1
+    }) // Always will be called when the promisse is fullfiled or rejected.
 }
 
-getCountryData('brasil')
+btn.addEventListener('click', () => {
+    getCountryData('brasil')
+})
