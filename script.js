@@ -68,7 +68,7 @@ const renderCountry = function(data, className = '') {
     countriesContainer.insertAdjacentHTML('beforeend', html)
 } 
 
-const request = fetch('https://restcountries.com/v3/name/brasil') // Promise.
+// const request = fetch('https://restcountries.com/v3/name/brasil') // Promise.
 
 const renderError = msg => {
     countriesContainer.insertAdjacentText('beforeend', msg)
@@ -133,38 +133,140 @@ const objValues = function(promData) {
 
 // Instead of nesting callbacks, we can CHAIN PROMISES for a sequence of asynchronous operations: escaping callback hell.
 
+const getJSON = (url, errMsg = 'Something wrong') => {
+    return fetch(url).then(res => {
+        console.log(res)
+        
+        if(!res.ok) {
+            throw new Error(`${errMsg} ${res.status}`) // thow method will imediatly terminate the function and propagate to the catch block, and treat this error.
+        }
 
+        return res.json()
+    })
+}
+
+
+// const getCountryData = function(country) {
+//     fetch(`https://restcountries.com/v3/name/${country}`)
+//     .then(
+//     res => {
+//         console.log(res)
+        
+//         if(!res.ok) {
+//             throw new Error(`Country not found ${res.status}`) // thow method will imediatly terminate the function and propagate to the catch block, and treat this error.
+//         }
+
+//         return res.json()
+//     })//, // This json() method is used to read the data from the request by fetch api.
+//     // err => alert(err)) // To deal with errors we can get them as a second paramether of the then method.
+//     .then(data => {
+//         const [promData] = data
+//         objValues(promData)
+//         renderCountry(promData)
+//         console.log(promData)
+//         // const [neighbour] = promData.borders
+//         const neighbour = 'aiousdioas'
+//         if(!neighbour) return;
+
+//         return fetch(`https://restcountries.com/v3/alpha/${neighbour}`) // THE RETURN VALUE FROM THE THEN METHOD AWAYS WILL BE THE PARAM OF THE NEXT THEN()
+//         .then(res => {
+//             if(!res.ok) {
+//                 throw new Error(`Country not found ${res.status}`) // thow method will imediatly terminate the function and propagate to the catch block, and treat this error.
+//             }
+//             res.json()
+//         })
+//         .then(data => {
+//             const [promData] = data
+//             objValues(promData)
+//             renderCountry(promData, 'neighbour')
+//         })
+//     }) // The then method is avaliable in all promises.
+//     .catch(error => {
+//         console.error(`${error} meu erro personalizado`)
+//         renderError(`Something went wrong!!! ${error}`)
+//     }) // We use catch in the end of the promise chain to deal with all errors.
+//     .finally(() => {
+//         countriesContainer.style.opacity = 1
+//     }) // Always will be called when the promisse is fullfiled or rejected.
+// }
+
+// btn.addEventListener('click', () => {
+//     getCountryData('brasil')
+// })
+
+// getCountryData('oaijsdia')
+
+// NEW REFACTORED CODE
+
+let lat, long 
+
+const whereAmI = function() {
+    navigator.geolocation.getCurrentPosition( pos => {
+        console.log(pos)
+        const {latitude} = pos.coords
+        const {longitude} = pos.coords
+        lat = latitude
+        long = longitude
+        console.log(lat,long)
+
+        const getLocation = () => {
+            return fetch(`https://geocode.xyz/${lat},${long}?geoit=json`)
+            .then(res => {
+                if(!res.ok) {
+                    console.log(res)
+                    throw new Error(`Cant get the data ${res.status}`)
+                }
+                return res.json()
+            })
+            .then(data => {
+                console.log(data)
+                const myData = data
+                return getCountryData(myData.country)
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+        }
+        getLocation()
+
+    })
+}
+
+whereAmI()
 
 const getCountryData = function(country) {
-    fetch(`https://restcountries.com/v3/name/${country}`)
-    .then(
-    res => res.json())//, // This json() method is used to read the data from the request by fetch api.
+    getJSON(`https://restcountries.com/v3/name/${country}`)//, // This json() method is used to read the data from the request by fetch api.
     // err => alert(err)) // To deal with errors we can get them as a second paramether of the then method.
     .then(data => {
         const [promData] = data
         objValues(promData)
         renderCountry(promData)
         console.log(promData)
-        const neighbour = promData.borders[0]
-        if(!neighbour) return;
+        console.log(promData.borders)
+        
+        // If the object doesent have the value.
+        if(promData.borders === undefined) {
+            throw new Error('Country not found')
+        }
 
-        return fetch(`https://restcountries.com/v3/alpha/${neighbour}`) // THE RETURN VALUE FROM THE THEN METHOD AWAYS WILL BE THE PARAM OF THE NEXT THEN()
-        .then(res => res.json())
+        const [neighbour] = promData.borders
+
+        return getJSON(`https://restcountries.com/v3/alpha/${neighbour}`)
         .then(data => {
             const [promData] = data
             objValues(promData)
             renderCountry(promData, 'neighbour')
         })
     }) // The then method is avaliable in all promises.
-    .catch(err => {
-        console.error(`${err} meu erro personalizado`)
-        renderError(`Something went wrong!!! ${err}`)
+    .catch(error => {
+        console.error(`${error} meu erro personalizado`)
+        renderError(`Something went wrong!!! ${error}`)
     }) // We use catch in the end of the promise chain to deal with all errors.
     .finally(() => {
         countriesContainer.style.opacity = 1
     }) // Always will be called when the promisse is fullfiled or rejected.
 }
 
-btn.addEventListener('click', () => {
-    getCountryData('brasil')
-})
+// btn.addEventListener('click', () => {
+//     getCountryData('australia')
+// })
