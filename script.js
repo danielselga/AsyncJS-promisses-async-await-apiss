@@ -33,22 +33,22 @@
 // //         <div class="country__data">
 // //         <h3 class="country__name">${data.name.common}</h3>
 // //         <h4 class="country__region">${data.region}</h4>
-// //         <p class="country__row"><span>👫</span>${data.population}</p>
-// //         <p class="country__row"><span>🗣️</span>${lang}</p>
-// //         <p class="country__row"><span>💰</span>${signal.symbol} ${signal.name}</p>
-// //         </div>
-// //     </article>`
+// // //         <p class="country__row"><span>👫</span>${data.population}</p>
+// // //         <p class="country__row"><span>🗣️</span>${lang}</p>
+// // //         <p class="country__row"><span>💰</span>${signal.symbol} ${signal.name}</p>
+// // //         </div>
+// // //     </article>`
 
-// //     countriesContainer.insertAdjacentHTML('beforeend', html)
-// //     countriesContainer.style.opacity = '1'
+// // //     countriesContainer.insertAdjacentHTML('beforeend', html)
+// // //     countriesContainer.style.opacity = '1'
 
-// //     console.log(html)
-// //     })
-// // }
+// // //     console.log(html)
+// // //     })
+// // // }
 
-// // getCountriesData('brazil' , '211M')
-// // getCountriesData('canada', '37M')
-// // getCountriesData('usa', '37M')
+// // // getCountriesData('brazil' , '211M')
+// // // getCountriesData('canada', '37M')
+// // // getCountriesData('usa', '37M')
 
 // let lang, signal
 
@@ -81,45 +81,45 @@
 
 // // const getCountriesDataAndNeighbour = (countrie) => {
     
-// //     const http = new XMLHttpRequest()
-// //     http.open('GET', `https://restcountries.com/v3/name/${countrie}`)
-// //     http.send()
-// //     console.log(http.responseText)
+//     const http = new XMLHttpRequest()
+//     http.open('GET', `https://restcountries.com/v3/name/${countrie}`)
+//     http.send()
+//     console.log(http.responseText)
 
-// //     http.addEventListener('load', function() {
+//     http.addEventListener('load', function() {
 
-// //         // Destructuring data from the request.
-// //         const [data] = JSON.parse(this.responseText)
-// //         console.log(data)
+//         // Destructuring data from the request.
+//         const [data] = JSON.parse(this.responseText)
+//         console.log(data)
     
-// //         // Passing population.
-// //         // data.population = population
+//         // Passing population.
+//         // data.population = population
 
-// //         // Get lang and Signal.
-//         // lang = Object.values(data.languages)[0] // This method get the frist value of the object does'nt matter if is a string or an object will return the frist value.
-//         // signal = Object.values(data.currencies)[0]
+//         // Get lang and Signal.
+        // lang = Object.values(data.languages)[0] // This method get the frist value of the object does'nt matter if is a string or an object will return the frist value.
+        // signal = Object.values(data.currencies)[0]
 
-// //         // Render HTML Function
-// //         renderCountry(data)
+//         // Render HTML Function
+//         renderCountry(data)
 
-// //         const [neighbour] = data.borders
-// //         console.log(neighbour)
+//         const [neighbour] = data.borders
+//         console.log(neighbour)
 
-// //         if(!neighbour) return;
+//         if(!neighbour) return;
 
-// //         // This function will be caled after the frist one beacuse we need the nighbour value to make the call.
-// //         const http2 = new XMLHttpRequest()
-// //         http2.open('GET', `https://restcountries.com/v3/alpha/${neighbour}`)
-// //         http2.send()
-// //         console.log(http.responseText)
+//         // This function will be caled after the frist one beacuse we need the nighbour value to make the call.
+//         const http2 = new XMLHttpRequest()
+//         http2.open('GET', `https://restcountries.com/v3/alpha/${neighbour}`)
+//         http2.send()
+//         console.log(http.responseText)
 
-// //         http2.addEventListener('load', function() { // callback
-// //             const [data2] = JSON.parse(this.responseText)
-// //             console.log(data2)
-// //             renderCountry(data2, 'neighbour')
-// //         })
-// //     })
-// // }
+//         http2.addEventListener('load', function() { // callback
+//             const [data2] = JSON.parse(this.responseText)
+//             console.log(data2)
+//             renderCountry(data2, 'neighbour')
+//         })
+//     })
+// }
 
 // // // getCountriesDataAndNeighbour('portugal')
 // // getCountriesDataAndNeighbour('usa')
@@ -146,59 +146,59 @@
 // }
 
 
-// // const getCountryData = function(country) {
-// //     fetch(`https://restcountries.com/v3/name/${country}`)
-// //     .then(
-// //     res => {
-// //         console.log(res)
+// const getCountryData = function(country) {
+//     fetch(`https://restcountries.com/v3/name/${country}`)
+//     .then(
+//     res => {
+//         console.log(res)
         
-// //         if(!res.ok) {
-// //             throw new Error(`Country not found ${res.status}`) // thow method will imediatly terminate the function and propagate to the catch block, and treat this error.
-// //         }
+//         if(!res.ok) {
+//             throw new Error(`Country not found ${res.status}`) // thow method will imediatly terminate the function and propagate to the catch block, and treat this error.
+//         }
 
-// //         return res.json()
-// //     })//, // This json() method is used to read the data from the request by fetch api.
-// //     // err => alert(err)) // To deal with errors we can get them as a second paramether of the then method.
-// //     .then(data => {
-// //         const [promData] = data
-// //         objValues(promData)
-// //         renderCountry(promData)
-// //         console.log(promData)
-// //         // const [neighbour] = promData.borders
-// //         const neighbour = 'aiousdioas'
-// //         if(!neighbour) return;
+//         return res.json()
+//     })//, // This json() method is used to read the data from the request by fetch api.
+//     // err => alert(err)) // To deal with errors we can get them as a second paramether of the then method.
+//     .then(data => {
+//         const [promData] = data
+//         objValues(promData)
+//         renderCountry(promData)
+//         console.log(promData)
+//         // const [neighbour] = promData.borders
+//         const neighbour = 'aiousdioas'
+//         if(!neighbour) return;
 
-// //         return fetch(`https://restcountries.com/v3/alpha/${neighbour}`) // THE RETURN VALUE FROM THE THEN METHOD AWAYS WILL BE THE PARAM OF THE NEXT THEN()
-// //         .then(res => {
-// //             if(!res.ok) {
-// //                 throw new Error(`Country not found ${res.status}`) // thow method will imediatly terminate the function and propagate to the catch block, and treat this error.
-// //             }
-// //             res.json()
-// //         })
-// //         .then(data => {
-// //             const [promData] = data
-// //             objValues(promData)
-// //             renderCountry(promData, 'neighbour')
-// //         })
-// //     }) // The then method is avaliable in all promises.
-// //     .catch(error => {
-// //         console.error(`${error} meu erro personalizado`)
-// //         renderError(`Something went wrong!!! ${error}`)
-// //     }) // We use catch in the end of the promise chain to deal with all errors.
-// //     .finally(() => {
-// //         countriesContainer.style.opacity = 1
-// //     }) // Always will be called when the promisse is fullfiled or rejected.
-// // }
+//         return fetch(`https://restcountries.com/v3/alpha/${neighbour}`) // THE RETURN VALUE FROM THE THEN METHOD AWAYS WILL BE THE PARAM OF THE NEXT THEN()
+//         .then(res => {
+//             if(!res.ok) {
+//                 throw new Error(`Country not found ${res.status}`) // thow method will imediatly terminate the function and propagate to the catch block, and treat this error.
+//             }
+//             res.json()
+//         })
+//         .then(data => {
+//             const [promData] = data
+//             objValues(promData)
+//             renderCountry(promData, 'neighbour')
+//         })
+//     }) // The then method is avaliable in all promises.
+//     .catch(error => {
+//         console.error(`${error} meu erro personalizado`)
+//         renderError(`Something went wrong!!! ${error}`)
+//     }) // We use catch in the end of the promise chain to deal with all errors.
+//     .finally(() => {
+//         countriesContainer.style.opacity = 1
+//     }) // Always will be called when the promisse is fullfiled or rejected.
+// }
 
-// // btn.addEventListener('click', () => {
-// //     getCountryData('brasil')
-// // })
+// btn.addEventListener('click', () => {
+//     getCountryData('brasil')
+// })
 
-// // getCountryData('oaijsdia')
+// getCountryData('oaijsdia')
 
-// // NEW REFACTORED CODE
+// NEW REFACTORED CODE
 
-// let lat, long 
+let lat, long 
 
 // const whereAmI = function() {
 //     navigator.geolocation.getCurrentPosition( pos => {
@@ -305,12 +305,12 @@
 
 // lotteryPromise.then(res => console.log(res)).catch(err => console.error(err))
 
-// // Function that will return a promise -> Promisifying setTimeout
-const wait = function(seconds) {
-    return new Promise(function(resolve) {
-        setTimeout(resolve, seconds * 1000)
-    })
-}
+// // // Function that will return a promise -> Promisifying setTimeout
+// const wait = function(seconds) {
+//     return new Promise(function(resolve) {
+//         setTimeout(resolve, seconds * 1000)
+//     })
+// }
 
 // wait(2).then(() => {
 //     console.log('I waited for 2 seconds')
@@ -334,38 +334,53 @@ const wait = function(seconds) {
 
 // Challenge #3
 
-const imgContainer = document.querySelector('.images')
+// const imgContainer = document.querySelector('.images')
 
-const createImg = function(imgPath) {
-    return new Promise(function(resolve, reject) { // New Promise expect a callback function.
-        const img = document.createElement('img')
-        img.src = imgPath
+// const createImg = function(imgPath) {
+//     return new Promise(function(resolve, reject) { // New Promise expect a callback function.
+//         const img = document.createElement('img')
+//         img.src = imgPath
 
-        img.addEventListener('load', function() {
-            imgContainer.append(img)
-            resolve(img)
-        })
+//         img.addEventListener('load', function() {
+//             imgContainer.append(img)
+//             resolve(img)
+//         })
 
-        img.addEventListener('error', function() {
-            reject(new Error('Img not found!'))
-        })
-    })
-}
+//         img.addEventListener('error', function() {
+//             reject(new Error('Img not found!'))
+//         })
+//     })
+// }
 
-let currentImg
+// let currentImg
 
-createImg('img/img-1.jpg').then(img => {
-    currentImg = img
-    console.log('img 1 loaded')
-    return wait(2)
-}).then(() => {
-    currentImg.style.display = 'none'
-    return createImg('img/img-2.jpg')
-}).then(img => {
-    currentImg = img
-    console.log('Image 2 loaded')
-    return wait(2)
-}).then(() => {
-    createImg.style.display = 'none'
-})
-.catch(err => console.error(err))
+// createImg('img/img-1.jpg').then(img => {
+//     currentImg = img
+//     console.log('img 1 loaded')
+//     return wait(2)
+// }).then(() => {
+//     currentImg.style.display = 'none'
+//     return createImg('img/img-2.jpg')
+// }).then(img => {
+//     currentImg = img
+//     console.log('Image 2 loaded')
+//     return wait(2)
+// }).then(() => {
+//     createImg.style.display = 'none'
+// })
+// .catch(err => console.error(err))
+
+let finalData
+
+const whereAmI = async function() { // Assync means the function will still running till the promises are fullfiled
+    const res = await fetch(`https://restcountries.com/v3/name/portugal`) // Await means we expect a promise.
+    console.log(res)
+    const [data] = await res.json()
+    renderCountry(data)
+} 
+
+whereAmI()
+
+console.log('FRIST')
+
+// Async await are simple sintatic sugar for promisse, that meas work in the same way as promise.
