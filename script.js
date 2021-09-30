@@ -306,11 +306,11 @@
 // lotteryPromise.then(res => console.log(res)).catch(err => console.error(err))
 
 // // Function that will return a promise -> Promisifying setTimeout
-// const wait = function(seconds) {
-//     return new Promise(function(resolve) {
-//         setTimeout(resolve, seconds * 1000)
-//     })
-// }
+const wait = function(seconds) {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, seconds * 1000)
+    })
+}
 
 // wait(2).then(() => {
 //     console.log('I waited for 2 seconds')
@@ -323,11 +323,49 @@
 
 
 
-const getPosition = function() {
-    return new Promise(function(resolve, reject) {
-        // navigator.geolocation.getCurrentPosition(pos => resolve(pos), err => reject(err))
-        navigator.geolocation.getCurrentPosition(resolve, reject)
+// const getPosition = function() {
+//     return new Promise(function(resolve, reject) {
+//         // navigator.geolocation.getCurrentPosition(pos => resolve(pos), err => reject(err))
+//         navigator.geolocation.getCurrentPosition(resolve, reject)
+//     })
+// }
+
+// getPosition().then(pos => console.log(pos))
+
+// Challenge #3
+
+const imgContainer = document.querySelector('.images')
+
+const createImg = function(imgPath) {
+    return new Promise(function(resolve, reject) { // New Promise expect a callback function.
+        const img = document.createElement('img')
+        img.src = imgPath
+
+        img.addEventListener('load', function() {
+            imgContainer.append(img)
+            resolve(img)
+        })
+
+        img.addEventListener('error', function() {
+            reject(new Error('Img not found!'))
+        })
     })
 }
 
-getPosition().then(pos => console.log(pos))
+let currentImg
+
+createImg('img/img-1.jpg').then(img => {
+    currentImg = img
+    console.log('img 1 loaded')
+    return wait(2)
+}).then(() => {
+    currentImg.style.display = 'none'
+    return createImg('img/img-2.jpg')
+}).then(img => {
+    currentImg = img
+    console.log('Image 2 loaded')
+    return wait(2)
+}).then(() => {
+    createImg.style.display = 'none'
+})
+.catch(err => console.error(err))
