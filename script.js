@@ -198,7 +198,7 @@
 
 // NEW REFACTORED CODE
 
-let lat, long 
+// let lat, long 
 
 // const whereAmI = function() {
 //     navigator.geolocation.getCurrentPosition( pos => {
@@ -370,17 +370,25 @@ let lat, long
 // })
 // .catch(err => console.error(err))
 
-let finalData
 
-const whereAmI = async function() { // Assync means the function will still running till the promises are fullfiled
-    const res = await fetch(`https://restcountries.com/v3/name/portugal`) // Await means we expect a promise.
-    console.log(res)
-    const [data] = await res.json()
-    renderCountry(data)
-} 
-
-whereAmI()
-
-console.log('FRIST')
+// const whereAmI = async function() { // Assync means the function will still running till the promises are fullfiled
+//     const res = await fetch(`https://restcountries.com/v3/name/portugal`) // Await means we expect a promise.
+//     // console.log(res)
+//     const [data] = await res.json()
+//     console.log(data)
+//     // renderCountry(data)
+// } 
 
 // Async await are simple sintatic sugar for promisse, that meas work in the same way as promise.
+
+const whereAmI = async function() { // Assync means the function will still running till the promises are fullfiled
+try {
+        const res = await fetch(`https://restcountries.com/v3/name/portugal`) // Await means we expect a promise.
+        const [data] = await res.json()
+        console.log(data)
+    } catch (err) {
+        alert(err)
+    }
+}
+
+whereAmI()
