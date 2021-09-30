@@ -292,31 +292,42 @@
 
 
 // Building a promise
-const lotteryPromise = new Promise(function(resolve, reject) {
-    console.log('Lotter draw is happening')
-    setTimeout(() => {
-        if(Math.random() >= 0.5) {
-            resolve('You win some money')
-        } else {
-            reject(new Error('You lose some money'))
-        }
-    }, 2000)
-})
+// const lotteryPromise = new Promise(function(resolve, reject) {
+//     console.log('Lotter draw is happening')
+//     setTimeout(() => {
+//         if(Math.random() >= 0.5) {
+//             resolve('You win some money')
+//         } else {
+//             reject(new Error('You lose some money'))
+//         }
+//     }, 2000)
+// })
 
-lotteryPromise.then(res => console.log(res)).catch(err => console.error(err))
+// lotteryPromise.then(res => console.log(res)).catch(err => console.error(err))
 
-// Function that will return a promise -> Promisifying setTimeout
-const wait = function(seconds) {
-    return new Promise(function(resolve) {
-        setTimeout(resolve, seconds * 1000)
+// // Function that will return a promise -> Promisifying setTimeout
+// const wait = function(seconds) {
+//     return new Promise(function(resolve) {
+//         setTimeout(resolve, seconds * 1000)
+//     })
+// }
+
+// wait(2).then(() => {
+//     console.log('I waited for 2 seconds')
+//     return wait(1)
+// }).then(() => console.log('I waited for 1 second'))
+
+// // Promises static methods
+// Promise.resolve('abc').then(res => console.log(res)) // Will resolve imediatly
+// Promise.reject('abc').catch(res => console.error(res))
+
+
+
+const getPosition = function() {
+    return new Promise(function(resolve, reject) {
+        // navigator.geolocation.getCurrentPosition(pos => resolve(pos), err => reject(err))
+        navigator.geolocation.getCurrentPosition(resolve, reject)
     })
 }
 
-wait(2).then(() => {
-    console.log('I waited for 2 seconds')
-    return wait(1)
-}).then(() => console.log('I waited for 1 second'))
-
-// Promises static methods
-Promise.resolve('abc').then(res => console.log(res)) // Will resolve imediatly
-Promise.reject('abc').catch(res => console.error(res))
+getPosition().then(pos => console.log(pos))
