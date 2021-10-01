@@ -381,20 +381,29 @@
 
 // Async await are simple sintatic sugar for promisse, that meas work in the same way as promise.
 
-const whereAmI = async function() { // Assync means the function will still running till the promises are fullfiled
-try { // The try block is needed to be used inside a function scope.
-        const res = await fetch(`https://restcountries.com/v3/name/portugal`) // Await means we expect a promise.
-        if(res.status === 404) {
-            throw new Error('Cant get data from the api!') // Thow stops the aplication.
-        } else if (res.status === 200) {
-            const [data] = await res.json()
+// const whereAmI = async function() { // Assync means the function will still running till the promises are fullfiled
+// try { // The try block is needed to be used inside a function scope.
+        // const res = await fetch(`https://restcountries.com/v3/name/portugal`) // Await means we expect a promise.
+        // if(res.status === 404) {
+            // throw new Error('Cant get data from the api!') // Thow stops the aplication.
+        // } else if (res.status === 200) {
+            // const [data] = await res.json()
             console.log(data)
-        }
+            // return `You are locataed in ${data.name.common}`
+        // }
+// 
+// 
+    // } catch (err) { // The catch block has access to any error inside the try block.
+        // alert(err)
+    // }
+// }
+// 
+// Returning value from async functions
+// const city = whereAmI() // Dont work
+// console.log(city)
 
+// Right method
+// whereAmI().then(city => console.log(city)).finally('Promise finished')
+// 
 
-    } catch (err) { // The catch block has access to any error inside the try block.
-        alert(err)
-    }
-}
-
-whereAmI()
+Promise.all() // Run all promises at same time, we can use Array.map() to extract especific data from and array of objects
