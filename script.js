@@ -382,11 +382,17 @@
 // Async await are simple sintatic sugar for promisse, that meas work in the same way as promise.
 
 const whereAmI = async function() { // Assync means the function will still running till the promises are fullfiled
-try {
+try { // The try block is needed to be used inside a function scope.
         const res = await fetch(`https://restcountries.com/v3/name/portugal`) // Await means we expect a promise.
-        const [data] = await res.json()
-        console.log(data)
-    } catch (err) {
+        if(res.status === 404) {
+            throw new Error('Cant get data from the api!') // Thow stops the aplication.
+        } else if (res.status === 200) {
+            const [data] = await res.json()
+            console.log(data)
+        }
+
+
+    } catch (err) { // The catch block has access to any error inside the try block.
         alert(err)
     }
 }
